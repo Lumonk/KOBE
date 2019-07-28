@@ -193,7 +193,7 @@ class seq2seq(nn.Module):
         if self.config.rl:
             rl_loss, rewards, baselines, entropy = self.compute_reward(
                 tgt, state)
-            # TODO entropy
+
             rl_loss = rl_loss
             return_dict['rl_loss'] = rl_loss.sum(dim=1).mean()
             return_dict['reward_mean'] = rewards[:, 0].mean()

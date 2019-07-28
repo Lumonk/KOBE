@@ -224,6 +224,7 @@ class TransformerEncoder(nn.Module):
             # print(src.shape) # max_len X batch_size
             conditions_1 = conditions_1.unsqueeze(0) # 1 X batch_size
             conditions_2 = conditions_2.unsqueeze(0) # 1 X batch_size
+
         embed = self.embedding(src)
 
         # RNN for positional information
@@ -250,7 +251,9 @@ class TransformerEncoder(nn.Module):
             # emb = self.embed_transform(emb)
             # Add
             # emb = emb + conditions_embed
+            #TODO: do not add condition_1_embed
             emb = emb + conditions_1_embed + conditions_2_embed
+            # emb = emb + conditions_1_embed
             # Remove condition
             # emb = emb
 

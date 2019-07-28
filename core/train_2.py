@@ -39,7 +39,9 @@ def build_model(checkpoints, config, device):
         tgt_padding_idx=utils.PAD,
         label_smoothing=config.label_smoothing,
     )
-    model.to(device)
+    if torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model.cuda())
+
     if config.param_init != 0.0:
         for p in model.parameters():
             p.data.uniform_(-config.param_init, config.param_init)
@@ -87,8 +89,10 @@ def train_model(model, data, optim, epoch, params, config, device, writer):
 
     for src, tgt, src_len, tgt_len, original_src, original_tgt, knowledge, knowledge_len in train_loader:
         # put the tensors on cuda devices
-        src, tgt = src.to(device), tgt.to(device)
-        src_len, tgt_len = src_len.to(device), tgt_len.to(device)
+        # src, tgt = src.to(device), tgt.to(device)
+        # src_len, tgt_len = src_len.to(device), tgt_len.to(device)
+        src, tgt = src.cuda(device, non_blocking=True), tgt.cuda(device, non_blocking=True)
+        src_len, tgt_len = src_len.cuda(device, non_blocking=True), tgt_len.cuda(device, non_blocking=True)
         if config.knowledge:
             knowledge, knowledge_len = knowledge.to(device), knowledge_len.to(device)
         # original_src, original_tgt = original_src.to(device), original_tgt.to(device)
@@ -119,9 +123,15 @@ def train_model(model, data, optim, epoch, params, config, device, writer):
                 return_dict, outputs = model(
                     src, lengths, dec, targets, knowledge, knowledge_len
                 )
+
             # outputs: [len, batch, size]
             pred = outputs.max(2)[1]
-            targets = targets.t()
+
+            # targets = targets.t()
+            # contiguous().view(-1, 64)
+            # print(targets.shape, pred.shape, utils.PAD)
+            # print(src.shape)
+            # print(outputs.shape)
             num_correct = (
                 pred.eq(targets).masked_select(targets.ne(utils.PAD)).sum().item()
             )

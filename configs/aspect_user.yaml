@@ -49,7 +49,7 @@ param_init: 0
 param_init_glorot: True
 emb_size: 512
 hidden_size: 512
-enc_num_layers: 6
+enc_num_layers: 4
 dec_num_layers: 2
 dropout: 0.1
 emb_dropout: 0.1

@@ -19,6 +19,7 @@ def model_opts():
     parser.add_argument('--expname', default='', type=str,
                         help="expeirment name")
     parser.add_argument('--batch-size', default=64, type=int)
+    parser.add_argument('--num-workers', default=8, type=int)
     parser.add_argument('--beam-size', default=1, type=int)
     parser.add_argument('--save-individual', action='store_true', default=False,
                         help="save individual checkpoint")

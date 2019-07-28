@@ -45,7 +45,7 @@ def load_data(config):
         dataset=train_set,
         batch_size=config.batch_size,
         shuffle=True,
-        num_workers=0,
+        num_workers=config.num_workers,
         collate_fn=utils.knowledge_padding if config.knowledge else utils.padding,
     )
     if hasattr(config, "valid_batch_size"):
@@ -56,7 +56,7 @@ def load_data(config):
         dataset=valid_set,
         batch_size=valid_batch_size,
         shuffle=False,
-        num_workers=0,
+        num_workers=config.num_workers,
         collate_fn=utils.knowledge_padding if config.knowledge else utils.padding,
     )
     return {
