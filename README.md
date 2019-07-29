@@ -1,4 +1,5 @@
 # KOBE
+# xxxx
 
 ### [Project](https://sites.google.com/view/kobe2019) | [arXiv](https://arxiv.org/abs/1903.12457)
 
@@ -21,7 +22,7 @@ In KDD 2019 (Applied Data Science Track)
 Clone this repo.
 
 ```bash
-git clone https://github.com/THUDM/KOBE
+git clone https://github.com/Lumonk/KOBE
 cd KOBE
 ```
 
@@ -91,6 +92,13 @@ python core/train.py --config configs/baseline.yaml --mode eval --restore experi
 
 - BLEU
 - DIVERSITY
+
+## Experiment results
+
+- baseline 
+- aspect-user: 
+- aspect-User_2: aspect, no user, encoder layers = 4
+- sapect-user-know : 
 
 TODO
 
