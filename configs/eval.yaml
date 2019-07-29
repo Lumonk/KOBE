@@ -71,6 +71,5 @@ rl_coef: 0.7
 label_dict_file: ''
 
 ## KOBE
-conditioned: False
-
-knowledge: True
+conditioned: True
+knowledge: False

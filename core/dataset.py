@@ -82,7 +82,7 @@ def load_eval_data(config):
     data["test"]["original_srcF"] = os.path.join('core/dataloading/', "src.str")
     data["test"]["tgtF"] = os.path.join('core/dataloading/', "tgt.id")
     data["test"]["original_tgtF"] = os.path.join('core/dataloading/', "tgt.str")
-    data["test"]["length"] = 4
+    data["test"]["length"] =16
     if config.knowledge:
         train_set = utils.BiKnowledgeDataset(
             os.path.join(config.data, 'train.supporting_facts'),

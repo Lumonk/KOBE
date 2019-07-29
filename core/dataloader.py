@@ -19,7 +19,7 @@ parser.add_argument('-tgt_char', action='store_true',
                     help='character based decoding')
 parser.add_argument('--lower', action='store_true',
                     help='lower the case')
-parser.add_argument('--report_every', type=int, default=100,
+parser.add_argument('--report_every', type=int, default=1,
                     help="Report status every this many sentences")
 opt = parser.parse_args()
 
