@@ -15,6 +15,7 @@ import yaml
 from torch.nn.init import xavier_uniform_
 from tqdm import tqdm
 
+import post_process
 import lr_scheduler as L
 import models
 import opts
@@ -282,6 +283,7 @@ def eval_model(model, data, params, config, device, writer):
     ) as f:
         for i in range(len(candidate)):
             f.write(f"{' '.join(candidate[i])}\n")
+    post_process.del_repeat(os.path.join(params["log_path"], "candidate.txt"))
     if config.label_dict_file != "":
         results = utils.eval_metrics(
             reference, candidate, label_dict, params["log_path"]
