@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 import torch
+import codecs
 
 PAD = 0
 UNK = 1
@@ -33,7 +34,7 @@ class Dict(object):
 
     # Load entries from a file.
     def loadFile(self, filename):
-        for line in open(filename):
+        for line in codecs.open(filename,'r','utf-8'):
             fields = line.split()
             label = fields[0]
             idx = int(fields[1])
