@@ -29,10 +29,11 @@ class DescriptionGenerator(object):
         self.model, _ = build_model(None, self.config, device)
         self.model.eval()
 
-    def predict(self, original_src: list) -> list:
+    def predict(self, original_src) -> list:
         src_vocab = self.data["src_vocab"]
         tgt_vocab = self.data["tgt_vocab"]
-        srcIds = src_vocab.convertToIdx(list(original_src), utils.UNK_WORD)
+        srcIds = original_src
+        
         src = torch.LongTensor(srcIds).unsqueeze(0)
         src_len = torch.LongTensor([len(srcIds)])
 
