@@ -183,7 +183,8 @@ def train_model(model, data, optim, epoch, params, config, device, writer):
             log_vars = defaultdict(float)
             params["report_total_loss"], params["report_time"] = 0, time.time()
             params["report_correct"], params["report_total"] = 0, 0
-
+		
+		# evaluation and saving at checkpoints
         if params["updates"] % config.eval_interval == 0:
             print("evaluating after %d updates...\r" % params["updates"])
             score = eval_model(model, data, params, config, device, writer)
