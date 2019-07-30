@@ -283,7 +283,7 @@ def eval_model(model, data, params, config, device, writer):
     ) as f:
         for i in range(len(candidate)):
             f.write(f"{' '.join(candidate[i])}\n")
-    post_process.del_repeat(os.path.join(params["log_path"], "candidate.txt"))
+    post_process.del_repeat(os.path.join(params["log_path"], "candidate.txt"), os.path.join(params["log_path"], "output.txt"))
     if config.label_dict_file != "":
         results = utils.eval_metrics(
             reference, candidate, label_dict, params["log_path"]

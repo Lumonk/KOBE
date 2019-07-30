@@ -1,8 +1,8 @@
 import codecs
 
 
-def del_repeat(prediction):
-    out_file = codecs.open('out_file.txt', 'w', 'utf-8')
+def del_repeat(prediction, output):
+    out_file = codecs.open(output, 'w', 'utf-8')
     with codecs.open(prediction, 'r', 'utf-8') as f:
         while True:
             pline = f.readline()
