@@ -388,7 +388,7 @@ class tensor2tensor(nn.Module):
 
         return sample_ids, alignments
 
-    def beam_sample(self, src, src_len, knowledge, knowledge_len, beam_size=1, eval_=False):
+    def beam_sample(self, src, src_len, knowledge=None, knowledge_len=None, beam_size=1, eval_=False):
         """
         beam search
         :param src: source input
