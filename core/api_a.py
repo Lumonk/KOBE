@@ -32,10 +32,11 @@ class DescriptionGenerator(object):
         self.model.eval()
 
     def predict(self, original_src: list) -> list:
-        src_vocab = self.data["src_vocab"]
+        # src_vocab = self.data["src_vocab"]
         tgt_vocab = self.data["tgt_vocab"]
-        srcIds = src_vocab.convertToIdx(list(original_src), utils.UNK_WORD)
-        print(srcIds)
+        # srcIds = src_vocab.convertToIdx(list(original_src), utils.UNK_WORD)
+        srcIds = original_src
+        # print(srcIds)
         src = torch.LongTensor(srcIds).unsqueeze(0)
         src_len = torch.LongTensor([len(srcIds)])
 
@@ -140,7 +141,7 @@ class DescriptionGeneratorMultiprocessing(object):
             )
         return tgt_list
 
-
+'''
 if __name__ == "__main__":
     # opt = opts.model_opts()
     g = DescriptionGenerator(
@@ -169,3 +170,4 @@ if __name__ == "__main__":
         print("".join(g.predict(list(src))))
         duration = time.time() - start
         print(duration)
+'''
