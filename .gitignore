@@ -125,3 +125,5 @@ dmypy.json
 .idea/
 data/
 #experiments/
+experiments/aspect-user/best_bleu_checkpoint.pt
+experiments/aspect_user_know/best_bleu_checkpoint.pt

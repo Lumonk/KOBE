@@ -8,11 +8,13 @@ from argparse import ArgumentParser, Namespace
 import torch
 import yaml
 from tqdm import tqdm
+import time
 
 import utils
 from dataset import load_data
 from train import build_model
 from utils import misc_utils
+import opts
 
 
 class DescriptionGenerator(object):
@@ -29,11 +31,12 @@ class DescriptionGenerator(object):
         self.model, _ = build_model(None, self.config, device)
         self.model.eval()
 
-    def predict(self, original_src:list) -> list:
-        src_vocab = self.data["src_vocab"]
+    def predict(self, original_src: list) -> list:
+        # src_vocab = self.data["src_vocab"]
         tgt_vocab = self.data["tgt_vocab"]
+        # srcIds = src_vocab.convertToIdx(list(original_src), utils.UNK_WORD)
         srcIds = original_src
-        
+        # print(srcIds)
         src = torch.LongTensor(srcIds).unsqueeze(0)
         src_len = torch.LongTensor([len(srcIds)])
 
@@ -138,13 +141,14 @@ class DescriptionGeneratorMultiprocessing(object):
             )
         return tgt_list
 
-
+'''
 if __name__ == "__main__":
+    # opt = opts.model_opts()
     g = DescriptionGenerator(
-        config="yaml/title_summary_item_filter_t2t.yaml",
-        gpus="0",
+        config="configs/eval.yaml",
+        gpu="0",
         restore=False,
-        pretrain="experiments/3.8-finetune-big/best_bleu_checkpoint.pt",
+        pretrain="experiments/aspect-user/best_bleu_checkpoint.pt",
         mode="eval",
         batch_size=1,
         beam_size=10,
@@ -154,11 +158,16 @@ if __name__ == "__main__":
         use_cuda=True,
         seed=1234,
         model="tensor2tensor",
+        num_workers=0
     )
     # For testing
-    print("".join(g.predict(list("这东西真智障"))))
+    print("".join(g.predict(list("帅气男装V领短袖上衣韩版百搭"))))
     # Interactive interface for multiprocessing
     print("COMPLETE")
     while True:
         src = input()
+        start = time.time()
         print("".join(g.predict(list(src))))
+        duration = time.time() - start
+        print(duration)
+'''
