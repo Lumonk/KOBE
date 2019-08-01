@@ -29,7 +29,7 @@ class DescriptionGenerator(object):
         self.model, _ = build_model(None, self.config, device)
         self.model.eval()
 
-    def predict(self, original_src) -> list:
+    def predict(self, original_src:list) -> list:
         src_vocab = self.data["src_vocab"]
         tgt_vocab = self.data["tgt_vocab"]
         srcIds = original_src

@@ -1,19 +1,9 @@
 import random
 import utils
-from .api import *
+#from .api import *
 
 LOWER=0
 CHAR=0
-self.config = yaml.load(open(config, "r"))
-        self.config = Namespace(**{**self.config, **opt})
-
-        # Load training data.pkl for src and tgt vocabs
-        self.data = load_data(self.config)
-
-        # Load trained model checkpoints
-        device, devices_ids = misc_utils.set_cuda(self.config)
-        self.model, _ = build_model(None, self.config, device)
-        self.model.eval()
         
 print('*'*5+"欢迎使用爱文案AI文案生成服务"+'*'*5)
 key=''
@@ -42,23 +32,23 @@ while (key!='quit'):
     dicts['src'] = utils.Dict(data='./dataloading/src.dict', lower=LOWER)
     srcIds = dicts['src'].convertToIdx(srcWords, utils.UNK_WORD)
     srcIdStr=(" ".join(list(map(str, srcIds))))
-    
-    model = DescriptionGenerator(
-        config="yaml/title_summary_item_filter_t2t.yaml",
-        gpus="0",
-        restore=False,
-        pretrain="experiments/3.8-finetune-big/best_bleu_checkpoint.pt",
-        mode="eval",
-        batch_size=1,
-        beam_size=10,
-        # refactor issue; workaround; delete afterwards:
-        scale=1,
-        char=False,
-        use_cuda=True,
-        seed=1234,
-        model="tensor2tensor",
-    )
-    print("".join(model.predict(srcIdStr))
+#    
+#    model = api.DescriptionGenerator(
+#        config="yaml/title_summary_item_filter_t2t.yaml",
+#        gpus="0",
+#        restore=False,
+#        pretrain="experiments/3.8-finetune-big/best_bleu_checkpoint.pt",
+#        mode="eval",
+#        batch_size=1,
+#        beam_size=10,
+#        # refactor issue; workaround; delete afterwards:
+#        scale=1,
+#        char=False,
+#        use_cuda=True,
+#        seed=1234,
+#        model="tensor2tensor",
+#    )
+#    print("".join(model.predict(srcIdStr)))
     
     
     key='quit'
