@@ -1,30 +1,31 @@
 import time
 import random
 import utils
-from api_a import *
+import re
+#from api_a import *
 
 LOWER=0
 CHAR=0
 
 print('*'*5+"Model Loading..."+'*'*5)
-model = DescriptionGenerator(
-        config="configs/eval.yaml",
-        gpu="0",
-        restore=False,
-        pretrain="experiments/aspect-user/best_bleu_checkpoint.pt",
-        mode="eval",
-        batch_size=1,
-        beam_size=10,
-        # refactor issue; workaround; delete afterwards:
-        scale=1,
-        char=False,
-        use_cuda=True,
-        seed=1234,
-        model="tensor2tensor",
-        num_workers=0
-    )
+#model = DescriptionGenerator(
+#        config="configs/eval.yaml",
+#        gpu="0",
+#        restore=False,
+#        pretrain="experiments/aspect-user/best_bleu_checkpoint.pt",
+#        mode="eval",
+#        batch_size=1,
+#        beam_size=10,
+#        # refactor issue; workaround; delete afterwards:
+#        scale=1,
+#        char=False,
+#        use_cuda=True,
+#        seed=1234,
+#        model="tensor2tensor",
+#        num_workers=0
+#    )
 dicts = {}
-dicts['src'] = utils.Dict(data='core/dataloading/src.dict', lower=LOWER)
+dicts['src'] = utils.Dict(data='./dataloading/src.dict', lower=LOWER)
 
 print('*'*5+"欢迎使用爱文案AI文案生成服务"+'*'*5)
 key=''
@@ -43,10 +44,20 @@ while (key!='quit'):
         inputstr = inputstr + char + " "
     inputstr = inputstr[:-1]
 
-
     aspect = input("请选择生成风格：\n a. Appearance\n b. Texture\n c. Function\n>>>")
+    assert bool(re.match(r'[abc]', aspect))
+    
     inputstr = '<'+str(random.randint(0,35))+'> '+'<'+aspect+'> '+inputstr
     # print('\n'+inputstr)
+    length = input("请输入生成长度: \n a. 短\n b. 中\n c. 长\n>>>")
+    assert bool(re.match(r'[abc]', length)) 
+    
+    if length=='a':
+        lenlimit = 25
+    elif length=='b':
+        lenlimit = 80
+    elif length=='c':
+        lenlimit = 999
     
     inputstr = inputstr.strip()
     if LOWER:
@@ -60,7 +71,33 @@ while (key!='quit'):
     # srcIdStr=(" ".join(list(map(str, srcIds))))
     
     start = time.time()
-    print("".join(model.predict(srcIds)))
+    output = "".join(model.predict(srcIds))
+#    output = "90 后 潮 男 原 创 酷 帅 潮 流 高 街 t 恤 ， 舒 适 柔 软 ， 亲 肤 不 起 球 ， 清 新 宽 松 ， 是 个 不 怎 么 挑 人 的 版 型 ， 简 约 而 不 简 单 ， 上 身 效 果 极 好 ， 穿 上 就 是 一 个 阳 光 大 男 孩 ， 但 不 失 稳 重 ， 休 闲 运 动 都 可 以".replace(' ','')
+#    output = re.split("[,.!? ，。！？ ]+", output)
+#    outputstr=""
+#    i=0
+#    while(len(outputstr)<=lenlimit and i<len(output)):
+#        print(len(outputstr))
+#        outputstr = outputstr+output[i]+'，'
+#        i=i+1
+    
+    # cutting length
+    pos=lenlimit
+    outputstr = output[:lenlimit+1]
+    while not bool(re.match(r'[,.!? ，。！？]', output[pos])):
+        pos += 1
+        if pos>=len(output):
+            break
+        outputstr = outputstr+output[pos]
+    print(outputstr[-1])
+    
+    if outputstr[-1] == '，':
+        outputstr = outputstr[:-1]
+    if outputstr[-1] != '。':
+        outputstr +='。'
+        
+        
+    print(outputstr)
     duration = time.time() - start
     print("Time Spent: ", duration,'\n')
 
