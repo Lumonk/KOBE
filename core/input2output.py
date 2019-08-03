@@ -53,11 +53,11 @@ while (key!='quit'):
     assert bool(re.match(r'[abc]', length)) 
     
     if length=='a':
-        lenlimit = 25
+        lenlimit = 60
     elif length=='b':
-        lenlimit = 80
+        lenlimit = 110
     elif length=='c':
-        lenlimit = 999
+        lenlimit = 9999
     
     inputstr = inputstr.strip()
     if LOWER:

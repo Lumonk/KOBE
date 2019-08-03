@@ -1,7 +1,7 @@
 #import sys
 #sys.path.append('../')
 
-f= open("2500freqword.str","w+")
+f= open("1000freqword_2.str","w+")
 print('Processing ...')
 
 import jieba
@@ -20,7 +20,7 @@ import jieba.analyse
 #    sys.exit(1)
 
 file_name = './processed.str'
-topK = 2500
+topK = 1000
 
 content = open(file_name, 'rb').read()
 
