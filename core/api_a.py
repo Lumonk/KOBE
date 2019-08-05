@@ -31,7 +31,7 @@ class DescriptionGenerator(object):
         self.model, _ = build_model(None, self.config, device)
         self.model.eval()
 
-    def predict(self, original_src: list) -> list:
+    def predict(self, original_src: list, knowids:list) -> list:
         # src_vocab = self.data["src_vocab"]
         tgt_vocab = self.data["tgt_vocab"]
         # srcIds = src_vocab.convertToIdx(list(original_src), utils.UNK_WORD)
@@ -39,19 +39,23 @@ class DescriptionGenerator(object):
         # print(srcIds)
         src = torch.LongTensor(srcIds).unsqueeze(0)
         src_len = torch.LongTensor([len(srcIds)])
+        know = torch.LongTensor(knowids).unsqueeze(0)
+        know_len = torch.LongTensor(len(knowids))
 
         if self.config.use_cuda:
             src = src.cuda()
             src_len = src_len.cuda()
+            know = know.cuda()
+            know_len = know_len.cuda()
 
         with torch.no_grad():
 
             if self.config.beam_size > 1:
                 samples, alignments = self.model.beam_sample(
-                    src, src_len, beam_size=self.config.beam_size, eval_=False
+                    src, src_len, know, know_len, beam_size=self.config.beam_size, eval_=False
                 )
             else:
-                samples, alignments = self.model.sample(src, src_len)
+                samples, alignments = self.model.sample(src, src_len, know, know_len)
 
         assert len(samples) == 1
         candidates = [tgt_vocab.convertToLabels(samples[0], utils.EOS)]
