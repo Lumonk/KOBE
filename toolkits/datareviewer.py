@@ -1,3 +1,6 @@
+#
+# This is to review and process the datasets
+#
 
 fileloc = './aikucun_data/alldata_unique.txt'
 outputF = open(fileloc, encoding='utf8')

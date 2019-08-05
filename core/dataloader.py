@@ -1,5 +1,7 @@
+#
+# This is to convert .str files into .id files with dict files
+#
 import argparse
-import pickle
 import utils
 
 parser = argparse.ArgumentParser(description='preprocess.py')

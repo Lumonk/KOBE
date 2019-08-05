@@ -1,5 +1,6 @@
-#import sys
-#sys.path.append('../')
+#
+# This is to identify the top K most frequent words with TF-IDF
+#
 
 f= open("1000freqword_2.str","w+")
 print('Processing ...')
@@ -30,3 +31,4 @@ for tag in tags:
     f.write(tag+'\n')
 print(",".join(tags))
 f.close()
+
