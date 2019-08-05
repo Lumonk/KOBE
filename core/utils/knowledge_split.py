@@ -7,6 +7,7 @@ import jieba
 import jieba.posseg
 import jieba.analyse
 import pickle
+import re
 
 
 # extract keys dict
@@ -31,7 +32,7 @@ def create_keys_dict():
 #
 def create_know_pair():
     freqwords=[]
-    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\500freqword.str', 'r', 'utf-8') as f:
+    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\1000freqword.str', 'r', 'utf-8') as f:
         while True:
             pline = f.readline()
 
@@ -50,7 +51,8 @@ def create_know_pair():
             if pline == '':
                 break
             pline = ''.join(pline.strip().split(' '))
-            sentences = pline.split('。')
+            # sentences = pline.split('。')
+            sentences = re.split('。|；', pline)
             for s in sentences:
                 words = jieba.posseg.cut(s)
                 for word, flag in words:
@@ -64,7 +66,7 @@ def create_know_pair():
 
             # break
     print(len(knowledge_dict))
-    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict.txt', 'w', 'utf-8') as f:
+    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict_1000.txt', 'w', 'utf-8') as f:
         for key, know in knowledge_dict.items():
             f.write(key)
             f.write('\t')
@@ -73,7 +75,7 @@ def create_know_pair():
 
 def create_know_dict():
     know_dict = {}
-    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict.txt', 'r', 'utf-8') as f:
+    with codecs.open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict_1000.txt', 'r', 'utf-8') as f:
         while True:
             pline = f.readline()
 
@@ -83,7 +85,10 @@ def create_know_dict():
             know_dict[pline[0]] = pline[1]
             # print(know_dict)
 
-    fw = open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict.pkl', "wb")
+    fw = open(r'C:\Users\jmlu\Desktop\Kobe\KOBE\data\know_dict_1000.pkl', "wb")
     print(fw)
     pickle.dump(know_dict, fw)
     fw.close()
+
+if __name__ == "__main__" :
+    create_know_dict()
