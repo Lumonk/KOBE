@@ -38,14 +38,14 @@ def webSpider(keys):
         knowledge_dict[key] = know
         print(i,"out of", len(keys))
 
-    with codecs.open(r'..\webspider\know_dict.txt', 'w', 'utf-8') as f:
+    with codecs.open(r'.\webspider\know_dict.txt', 'w', 'utf-8') as f:
         for key, know in knowledge_dict.items():
             f.write(key)
             f.write('\t')
             f.write(know)
             f.write('\n')
 
-    fw = open(r'..\webspider\know_dict.pkl', "wb")
+    fw = open(r'.\webspider\know_dict.pkl', "wb")
     print(fw)
     pickle.dump(knowledge_dict, fw)
     f.close()
@@ -54,7 +54,7 @@ def webSpider(keys):
 
 
 def createKnowStr(query):
-    knowledge_dict = pickle.load(open("../webspider/know_dict.pkl", "rb"))
+    knowledge_dict = pickle.load(open("./webspider/know_dict.pkl", "rb"))
     knowlist=[]
     for q in query:
         if q in knowledge_dict:
@@ -63,4 +63,4 @@ def createKnowStr(query):
     knowstr = "".join(random.sample(knowlist, min(3, len(knowlist))))
     return knowstr
 
-#print(createKnowStr(['男士']))
+# print(createKnowStr(['男士', '韩版']))
