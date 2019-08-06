@@ -79,8 +79,9 @@ while (key!='quit'):
     aspect = input("请选择生成风格：\n a. Appearance\n b. Texture\n c. Function\n>>>")
     assert bool(re.match(r'[abc]', aspect))
     
-    inputstr = '<'+str(random.randint(0,35))+'> '+'<'+aspect+'> '+inputstr
-    # print('\n'+inputstr)
+    # inputstr = '<'+str(random.randint(0,35))+'> '+'<'+aspect+'> '+inputstr
+    inputstr = '<1> '+'<'+aspect+'> '+inputstr
+    print('\n'+inputstr)
     length = input("请输入生成长度: \n a. 短\n b. 中\n c. 长\n>>>")
     assert bool(re.match(r'[abc]', length)) 
     
@@ -96,9 +97,10 @@ while (key!='quit'):
     
     query = key.split(" ")
     knowstr = key2knowstr.createKnowStr(query)
+    print(knowstr)
     #TODO: convert to Know_id
-    knowid = [12, 13, 14, 137, 1, 200, 198, 448 ,706, 1, 199, 138, 1041 ,37, 122, 872, 2946, 17, 124, 431, 1220, 477, 3960, 285]
-
+    # knowid = [12, 13, 14, 137, 1, 200, 198, 448 ,706, 1, 199, 138, 1041 ,37, 122, 872, 2946, 17, 124, 431, 1220, 477, 3960, 285]
+    knowid = key2knowstr.knowStr2Id(knowstr)
     
     
     start = time.time()

@@ -63,7 +63,7 @@ def createKnowStr(query):
             if knowledge_dict[q] != "百度百科是一部内容开放、自由的网络百科全书，旨在创造一个涵盖所有领域知识，服务所有互联网用户的中文知识性百科全书。在这里你可以参与词条编辑，分享贡献你的":
                 qknow=knowledge_dict[q]
                 knowlist.append(qknow)
-    knowstr = "".join(random.sample(knowlist, min(3, len(knowlist))))
+    knowstr = "".join(random.sample(knowlist, min(2, len(knowlist))))
     pattern = re.compile("[^\u4e00-\u9fa5^.^a-z^A-Z^0-9]")
     knowstr =   pattern.sub('', knowstr)
     return knowstr
@@ -73,7 +73,7 @@ def knowStr2Id(knowstr):
     LOWER=0
     CHAR=0
     dicts={}
-    dicts['tgt'] = utils.Dict(data='./dataloading/tgt.dict', lower=LOWER)
+    dicts['tgt'] = utils.Dict(data='core/dataloading/tgt.dict', lower=LOWER)
     knowstr = knowstr.replace(' ','')
     s=""
     for char in knowstr:
