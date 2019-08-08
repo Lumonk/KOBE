@@ -1,5 +1,5 @@
 # Data
-data: 'data/aspect-user/preprocessed/'
+data: 'data/aspect-user/preprocessed/clean_data/'
 max_time_step: 150
 shared_vocab: False
 unk: True

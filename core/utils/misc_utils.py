@@ -16,6 +16,7 @@ class AttrDict(dict):
 
 def set_cuda(config):
     use_cuda = torch.cuda.is_available()
+    print(use_cuda)
     assert config.use_cuda == use_cuda
     if use_cuda:
         torch.cuda.manual_seed(config.seed)

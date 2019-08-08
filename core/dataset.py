@@ -15,6 +15,9 @@ def load_data(config):
     print("loading data...\n")
     data = pickle.load(open(config.data + "data.pkl", "rb"))
     # retrieve data, due to the problem of path.
+    data["train"]["length"] = 2098573
+    data["valid"]["length"] = 9840
+    data["test"]["length"] = 5194
     data["train"]["length"] = int(data["train"]["length"] * config.scale)
     data["train"]["srcF"] = os.path.join(config.data, "train.src.id")
     data["train"]["original_srcF"] = os.path.join(config.data, "train.src.str")
