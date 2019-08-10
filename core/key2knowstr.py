@@ -73,7 +73,8 @@ def knowStr2Id(knowstr):
     LOWER=0
     CHAR=0
     dicts={}
-    dicts['tgt'] = utils.Dict(data='core/dataloading/tgt.dict', lower=LOWER)
+    # dicts['tgt'] = utils.Dict(data='core/dataloading/tgt.dict', lower=LOWER)
+    dicts['tgt'] = utils.Dict(data='data/aspect-user/preprocessed/short_dataset/tgt.dict', lower=LOWER)
     knowstr = knowstr.replace(' ','')
     s=""
     for char in knowstr:

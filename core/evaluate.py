@@ -241,6 +241,7 @@ def eval_model(model, data, params, config, device, writer):
     tgt_vocab = data["tgt_vocab"]
 
     for src, tgt, src_len, tgt_ylen, original_src, original_tgt, knowledge, knowledge_len in tqdm(valid_loader):
+        # print(original_src)
         src = src.to(device)
         src_len = src_len.to(device)
         if config.knowledge:
@@ -341,7 +342,7 @@ if __name__ == "__main__":
     else:
         checkpoints = None
 
-    data = load_eval_data(config)
+    data = load_data(config)
     print('data: ', data.keys())
     # exit()
     model, optim = build_model(checkpoints, config, device)
@@ -361,13 +362,5 @@ if __name__ == "__main__":
     if config.restore:
         params["updates"] = checkpoints["updates"]
 
-    if config.mode == "train":
-        for i in range(1, config.epoch + 1):
-            if config.schedule:
-                scheduler.step()
-                print("Decaying learning rate to %g" % scheduler.get_lr()[0])
-            train_model(model, data, optim, i, params, config, device, writer)
-        for metric in config.metrics:
-            print("Best %s score: %.3f\n" % (metric, max(params[metric])))
-    else:
-        score = eval_model(model, data, params, config, device, writer)
+
+    score = eval_model(model, data, params, config, device, writer)
